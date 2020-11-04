@@ -2,20 +2,25 @@
     a calculator that can be accessed live by multiple users*/
 
 
-const path = require("path")
+const path = require("path");
 const bodyParser = require("body-parser");
-const mongoose =  require("mongoose");
+const dbConnection =  require("./db/connection");
+
+const cookieParser =  require("cookie-parser");
 // setting express app
 const express =  require("express");
 
 // MathJs Library
 const mexp = require('math-expression-evaluator');
-
-
-
-
 const App = express();
 
+// importing routes
+const routes      = require("./routes/routes");
+const loginRoutes      = require("./routes/login-registration");
+const roomRoutes      = require("./routes/room");
+const userRoutes      = require("./routes/user");
+
+const httpSocket          = require("./socket");
 
 
 // using http to settup an express server
@@ -29,56 +34,27 @@ const io =  require("socket.io")(httpServer)
 const public =  path.join(__dirname, "public")
 const views = path.join(__dirname, "public/views");
 
-
-
+dbConnection();
+App.use(cookieParser("my little secret"))
 App.use(express.static(public))
 App.use(bodyParser.urlencoded({extended: false}));
+App.use(bodyParser.json());
 App.set("views", views);
-
 App.set('view engine', 'ejs');
-App.use(require("./routes"));
+
+
+App.use(routes);
+App.use(loginRoutes);
+App.use(roomRoutes);
+App.use(userRoutes);
 
 
 
-let count=0;
+
+// socket communication
 io.on("connection", (socket)=>{
-    
-    console.log("new user connected")
-    socket.emit("message", "welcome to sezzle calculator")
 
-    socket.on("message", (message)=>{
-
-        io.emit("message", message);
-    })
-    
-    
-    socket.on("evaluate", (expression, cb)=>{
-
-        try{
-
-            // try to evaluate the expression
-            const result =  mexp.eval(expression); 
-            console.log(result);
-
-            cb(result);
-            socket.broadcast.emit("message", "a user: " + expression + " = " + result) 
-
-        }
-        catch(err){
-            // if error send error message
-            const msg  =  "ERROR!! the following expression cannot be evaluted: " + expression
-            cb(msg)
-        }
-       
-
-    })
-
-    socket.broadcast.emit("joined", "a new user has joined" )
-
-    socket.on("disconnect", ()=>{
-
-        io.emit("Left", "a user just left")
-    })
+    httpSocket(io, mexp, socket);
 })
 
 

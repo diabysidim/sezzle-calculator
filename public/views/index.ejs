@@ -1,25 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Sezzle Calulator</title>
-    </head>
-    <body>
-        <div class="message-screen">
+<%-include('./partials/header')%>
+
+        <div class="dashboard-container">
+
+            <h1><%=user.firstName %> <%= user.lastName %> </h1>
+            
 
         </div>
-         <form id="calculator-form">
-            <input type="text" name="userInput">
-            <select name="userAction">
-                <option value="evaluate" selected>Evaluate</option>
-                <option value="message">Message</option>
-                
-            </select>
-            <button>Send</button>
-         </form>
 
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/socket.js"></script>
-    </body>
-
-    
-</html>
+<%-include('./partials/footer')%>

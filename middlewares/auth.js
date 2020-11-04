@@ -5,25 +5,45 @@ const jwt   = require("jsonwebtoken");
 
 module.exports  =  async (req, res, next)=>{
 
+    res.locals.currentUser=null;
+
     try{
-        const token = req.header("Authorization").replace("Bearer ", "");
-        const decoded= jwt.verify(token, "sezzleCalculatorToken");
-        const user = await Login.findOne({_id: decoded.id, "tokens.token": token });
+        const token = req.cookies.token;
+        const decoded= await jwt.verify(token, "sezzleCalculatorToken");
+        const user = await User.findOne({_id: decoded.id, "tokens.token": token });
+    
+            
+            
+    
 
-        if(!user){
+        console.log(req.route.path, user)
+        res.set('Cache-Control', 'no-store')
 
-            res.redirect("/login")
-            throw new Error("no user found");
+        if(!user && (req.route.path !=="/login" && req.route.path !== "/register")){
+
+            console.log("redirect")
+            return res.status(401).redirect("/login")
             
         }
 
+        if(user && (req.route.path ==="/login" || req.route.path === "/register")) {
+            console.log("redirecting to index");
+            return res.redirect("/")}
+
+
         req.user = user;
+        res.locals.currentUser=req.user;
         req.token =token;
 
         next();
 
     }
     catch (err){
+
+        if(req.route.path ==="/login" || req.route.path === "/register") {
+            console.log("its logging")
+            return next();}
+
         res.redirect("/login")
         console.log(err)
         

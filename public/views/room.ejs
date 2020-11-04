@@ -1,0 +1,23 @@
+<%-include('./partials/header')%>
+
+        <div class="message-screen">
+
+        </div>
+         <form id="calculator-form">
+            <input type="text" name="userInput">
+            <select name="userAction">
+                <option value="evaluate" selected>Evaluate</option>
+                <option value="message">Message</option>
+                
+            </select>
+            <button>Send</button>
+         </form>
+
+         <form action="/logout" method="POST">
+            <button>Logout</button>
+        </form>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/socket.js"></script>
+
+<%-include('./partials/footer')%>

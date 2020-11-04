@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sezzle Calulator</title>
+        <script src="/js/utilities.js"></script>
+    </head>
+    <body>
+    <nav>
+        <h1>Sezzle Calculator</h1>
+        <% if(currentUser) { %> 
+            <a href="/"> <%=currentUser.userName%></a>
+           <form action="/logout" method="POST">
+                <button>logout</button>
+           </form>
+           <% } else{ %> 
+            <a href="/login"> Login </a>
+           <% } %> 
+    </nav>
+        

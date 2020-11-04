@@ -1,8 +1,15 @@
-<html>
-    <head>
+<%-include('./partials/header')%>
+<div class="login-container"> 
+    
+        <form id="login-form">
 
-    </head>
-    <body>
-         Login
-    </body>
-</html>
+            <input type="text" name="userName" >
+            <input type="text" name="password" >
+            <button>Login</button>
+        
+        </form>
+</div>
+
+<script src="/js/login.js"></script>
+
+<%-include('./partials/footer')%>

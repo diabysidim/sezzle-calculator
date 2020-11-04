@@ -37,15 +37,22 @@ userSchema.virtual("rooms", {
 // method on a user instance to generate a token
 
 userSchema.methods.generateToken = async function () {
-    const token = jwt.sign({
-        id: this._id.toString()
-    }, "sezzleCalculatorToken", {
-        expiresIn: "30 minutes",
-    });
-    this.tokens.push({
-        token: token
-    });
-    return token;
+    try{
+        const token = jwt.sign({
+            id: this._id.toString()
+        }, "sezzleCalculatorToken", {
+            expiresIn: "30 minutes",
+        });
+        this.tokens.push({
+            token: token
+        });
+        return token;
+    }
+    catch(e){
+        console.log(e);
+        throw new Error("there was an issue generating the token")
+    }
+   
 };
 
 //
@@ -62,26 +69,26 @@ userSchema.statics.verifyToken = async function (token) {
 
 userSchema.statics.register = async (user) => {
     try {
-        const user = await new User(user);
-        user.save();
-        await user.generateToken();
-        return user;
-    } catch (err) {
-        return err;
+        const newUser = await new User(user);
+        await newUser.save();
+        return newUser;
+    } catch(err) {
+        console.log("there is an error");
+             throw new Error("username taken")
     }
 };
 
 userSchema.statics.login = async (username, password) => {
     const user = await User.findOne({
-        username
+        userName:username
     });
 
-    if (!user) throw new Error("unable to User 1");
+    if (!user) throw new Error("the username or password is not valid");
 
     const isValidPass = await bcrypt.compare(password, user.password);
 
     if (isValidPass) return user;
-    else throw new Error("unable to User");
+    else throw new Error("The username or the password is not valid");
 };
 
 // pre save and pre remove middlewares
