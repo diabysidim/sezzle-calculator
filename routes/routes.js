@@ -9,9 +9,9 @@ Router.get("/", auth, (req, res)=>{
     return res.render("index", {user:req.user});
 })
 
-Router.get("/404", (req, res)=>{
+Router.get("/404", auth, (req, res)=>{
 
-    return res.render("404")
+    return res.render("404", {currentUser: req.user})
 })
 
 

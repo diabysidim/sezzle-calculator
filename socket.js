@@ -1,25 +1,45 @@
+
+const { addUser, removeUser, usersInRoom, storeLogs, addToLogs } = require("./utils/activeUsers");
+
+
 module.exports = (io, mexp, socket)=>{
-    
-    console.log("new user connected")
-    socket.emit("message", "welcome to sezzle calculator")
+     
+    socket.on("join", async ({username, room}, cb)=>{
+        
+        const user = await addUser(socket.id, username, room);
+        socket.join(room);
+        if(user.user){
+            socket.emit("messageReceived", `Hello welcome ${username} to ${room} room`);
+            io.to(room).emit("usersInRoom", usersInRoom(room))
+            socket.broadcast.to(room).emit("messageReceived", `${username} has joined the room!!`)
+        }  
 
-    socket.on("message", (message)=>{
-
-        io.emit("message", message);
+        cb(user);     
     })
-    
-    
-    socket.on("evaluate", (expression, cb)=>{
+
+    socket.on("message", async (message, {username, room}, cb)=>{
+
+        const msg = `${username}: ${message}`
+        socket.broadcast.to(room).emit("messageReceived", msg);
+        const number = await addToLogs(room, {userMessages: {username:username, timestamp:1, text:message}});
+        console.log(number)
+        cb(msg);
+        
+    })
+
+    socket.on("evaluate", async  (expression, {username, room}, cb)=>{
 
         try{
 
             // try to evaluate the expression
             const result =  mexp.eval(expression); 
-            console.log(result);
 
-            cb(result);
-            socket.broadcast.emit("message", "a user: " + expression + " = " + result) 
-
+           const message= `${username} evaluted  ${expression}  =  ${result}`
+            socket.broadcast.to(room).emit("messageReceived", message) 
+            
+            const number = await addToLogs(room, {userMessages: {username:username, timestamp:1, text:message}});
+         
+            cb(message);
         }
         catch(err){
             // if error send error message
@@ -29,11 +49,18 @@ module.exports = (io, mexp, socket)=>{
        
 
     })
+    
 
-    socket.broadcast.emit("joined", "a new user has joined" )
+    socket.on("disconnect", async ()=>{
 
-    socket.on("disconnect", ()=>{
-
-        io.emit("Left", "a user just left")
+        try{
+            
+        const user =  await removeUser(socket.id);
+        if(user) io.emit("Left", `${user.username} just left the room` )
+        }
+        catch(e){
+            console.log(e)
+        }
+        
     })
 }

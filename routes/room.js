@@ -5,27 +5,26 @@ const auth = require("../middlewares/auth");
 const Router = require("express").Router();
 
 
-Router.get("/rooms/new", auth, async (req, res)=>{
 
-    res.render("new-room");
+
+
+
+Router.get("/rooms", auth, async (req, res)=>{
+
+    try{
+        const rooms = await Room.find({}).populate("owner");
+
+        res.render("rooms", {user:req.user, rooms: rooms });
+    }
+    catch(err){
+
+        console.log(err);
+        res.redirect("/")
+    }
+    
 })
 
 
-
-Router.get("/room", auth, async (req, res)=>{
-
-    res.render("room");
-})
-
-
-Router.get("/rooms/:id", auth, async (req, res)=>{
-
-
-    const room = await Room.findOne({_id: req.params.id})
-
-    return res.status(200).send(room);
-    res.render("room", {room: room} );
-})
 
 Router.post("/rooms", auth, async (req, res)=>{
     try{
@@ -42,14 +41,54 @@ Router.post("/rooms", auth, async (req, res)=>{
     
 })
 
+
+Router.get("/rooms/new", auth, async (req, res)=>{
+
+    res.render("new-room", {user:req.user});
+})
+
+Router.get("/rooms/general", auth, async (req, res)=>{
+
+    try{
+        const room = await Room.findOne({name:"General"}) 
+
+        res.render("room", {user: req.user, room:room.name});
+    }
+    catch(err){
+
+        console.log(err);
+        res.redirect("/")
+    }
+    
+})
+
+
+Router.get("/rooms/:id", auth, async (req, res)=>{
+
+    try{
+        const room = await Room.findOne({_id: req.params.id})
+
+        res.render("room", {user: req.user, room:room.name});
+    }
+    catch(err){
+
+        console.log(err);
+        res.redirect("/")
+    }
+   
+    
+})
+
+
+
 Router.delete("/rooms/:id", auth, async (req, res)=>{
         
         try{
             const room = await Room.deleteOne({_id:req.params.id, owner: req.user._id})
-            return res.redirect("/rooms")
+            return res.status(200).send("room deleted")
         }
         catch(e){
-            return res.render("room", {roomInfo: req.body, error:"there was a problem deleting the room"});
+            return res.status(500).send("thre  was an error while deleting the room");
         }
         
 

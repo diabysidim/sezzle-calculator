@@ -1,0 +1,40 @@
+<%-include('./partials/header')%>
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/profile.css">
+<script defer src="https://pro.fontawesome.com/releases/v5.10.0/js/all.js" integrity="sha384-G/ZR3ntz68JZrH4pfPJyRbjW+c0+ojii5f+GYiYwldYU69A+Ejat6yIfLSxljXxD" crossorigin="anonymous"></script>
+<%-include('./partials/header2')%>
+
+        <div class="main-container">
+
+           
+        <%-include('./partials/sidebar')%>
+        <div class="main-container__content">
+           
+            
+            <div class="profile-container"> 
+
+                <h1>Profile</h1>
+                <p class="error"></p>
+                <form id="update-form">
+                    <input type="text" name="firstName" autocomplete="off" value="<%-user.firstName%>" >
+                    <input type="text" name="lastName" autocomplete="off" value="<%- user.lastName%>" >
+                    <input type="text" name="userName" autocomplete="off" value="<%- user.userName%>" >
+                    <input type="password" name="password" autocomplete="off">
+                    <input type="password" name="passwordConfirmation" autocomplete="off">
+                   <div>
+                    <button class="btn btn-center btn-large">Update</button>
+                   </div>         
+                </form>
+                <a #id="delete-button" class="btn-link"> delete account</a>
+            </div>
+            </div>
+
+        </div>
+            
+
+           
+            
+
+    
+
+<%-include('./partials/footer')%>

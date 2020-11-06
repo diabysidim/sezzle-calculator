@@ -1,7 +1,9 @@
 
+const Room = require("../db/models/Room");
 const User = require("../db/models/User");
 const auth = require("../middlewares/auth");
 const Router = require("express").Router();
+
 
 
 
@@ -10,7 +12,7 @@ Router.get("/users/:id", auth,  async (req, res)=>{
     try{
 
         const user =  await User.findOne({_id:req.params.id});
-        if(user)  return res.render("user", user );
+        if(user)  return res.render("user", {user:user} );
         else throw new Error("user not found")
     }
     catch(err){
@@ -48,6 +50,23 @@ catch(e){
 
 
 })
+
+
+Router.get("/:id/rooms", auth,  async (req, res)=>{
+
+    try{
+        const rooms = await Room.find({owner:req.params.id}).populate("owner");
+
+        res.render("rooms", {user: req.user, rooms: rooms });
+    }
+    catch(err){
+
+        console.log(err);
+        res.redirect("/")
+    }
+   
+})
+
 
 
 Router.get("*", (req, res)=>{

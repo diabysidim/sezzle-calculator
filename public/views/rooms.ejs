@@ -1,0 +1,47 @@
+<%-include('./partials/header')%>
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/rooms.css">
+<script defer src="https://pro.fontawesome.com/releases/v5.10.0/js/all.js" integrity="sha384-G/ZR3ntz68JZrH4pfPJyRbjW+c0+ojii5f+GYiYwldYU69A+Ejat6yIfLSxljXxD" crossorigin="anonymous"></script>
+<%-include('./partials/header2')%>
+
+
+<div class="main-container">
+
+           
+    <%-include('./partials/sidebar')%>
+    <div class="main-container__content">
+
+        <div class="rooms-container">
+            <h1>Rooms</h1>
+                
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>owner</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                
+        <% if(rooms) rooms.forEach(room => { %>
+            
+            <tr>
+                <td><%-room.name%></td>
+                <td><%-room.description%></td>
+                <td><% if(room.owner){%> <%-room.owner.userName %> <%} else {%> <%-"anonymous"%> <%}%></td>
+                <td> <a href="/rooms/<%-room._id%>">Join</a> <% if(room.owner && room.owner.userName === user.userName){%> <a id="<%-room._id%>" href="#" class="btn-link delete-btn">delete</a> <%}%> </td>
+            </tr>
+            
+        <% }) %>
+
+        </tbody>
+        </table>
+        </div>
+        
+    </div>
+</div>
+
+<script src="/js/rooms.js"></script>

@@ -16,18 +16,18 @@ module.exports  =  async (req, res, next)=>{
             
     
 
-        console.log(req.route.path, user)
+        
         res.set('Cache-Control', 'no-store')
 
-        if(!user && (req.route.path !=="/login" && req.route.path !== "/register")){
+        if(!user && (req.route.path !=="/login" && req.route.path !== "/register" && req.route.path !== "/404")){
 
-            console.log("redirect")
+           
             return res.status(401).redirect("/login")
             
         }
 
-        if(user && (req.route.path ==="/login" || req.route.path === "/register")) {
-            console.log("redirecting to index");
+        if(user && (req.route.path ==="/login" || req.route.path === "/register" )) {
+           
             return res.redirect("/")}
 
 
@@ -40,8 +40,8 @@ module.exports  =  async (req, res, next)=>{
     }
     catch (err){
 
-        if(req.route.path ==="/login" || req.route.path === "/register") {
-            console.log("its logging")
+        if(req.route.path ==="/login" || req.route.path === "/register" || req.route.path === "/404" ) {
+           
             return next();}
 
         res.redirect("/login")

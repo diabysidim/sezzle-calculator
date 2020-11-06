@@ -1,0 +1,31 @@
+.rooms-container{
+
+    height: 100%;
+    width: 100%;
+}
+
+.rooms-container h1{
+
+    margin-bottom: 2rem;
+}
+
+.rooms-container table{
+
+    width: 50rem;
+    text-align: center;
+    vertical-align: middle;
+    border-collapse: collapse;
+}
+
+.rooms-container tr{
+
+    border: 1px solid black;
+    height: 4rem;
+    font-size: 2rem;
+}
+
+#delete-room{
+
+    cursor: pointer;
+    color: red;
+}

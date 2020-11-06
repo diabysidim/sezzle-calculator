@@ -1,0 +1,42 @@
+
+.login-container{
+
+    height: calc(100% - 12rem);
+    width: 100%;   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    margin-bottom: auto;
+}
+
+.login-container h1{
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.login-container a{
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+.login-container .error{
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: red;
+}
+#login-form{
+
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
+    
+}
+
+#login-form input{
+
+    margin-bottom: 2rem;
+    width: 30rem;
+    height: 4.5rem;
+}

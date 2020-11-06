@@ -1,13 +1,18 @@
 <%-include('./partials/header')%>
+<link rel="stylesheet" href="/css/login.css">
+<%-include('./partials/header2')%>
+
 <div class="login-container"> 
-    
+        <h1>Login</h1>
         <form id="login-form">
 
-            <input type="text" name="userName" >
-            <input type="text" name="password" >
-            <button>Login</button>
+            <input type="text" name="userName" placeholder="Username" autocomplete="off" >
+            <input type="password" name="password" placeholder="Password" autocomplete="off" >
+            <button class="btn btn-orange btn-large btn-center">Login</button>
         
         </form>
+        <p class="error"></p>
+        <a href="/register">Register</a>
 </div>
 
 <script src="/js/login.js"></script>

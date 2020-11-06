@@ -6,7 +6,10 @@ const roomSchema = new mongoose.Schema({
     required: true,
     trim: true,
     index: true,
+    unique: true,
   },
+
+  description: String,
 
   logs: [{
       userMessages:{
@@ -19,7 +22,6 @@ const roomSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
-roomSchema.index({ name: 1, ownwe: 1 }, { unique: true })
 
 roomSchema.statics.createRoom = async (name, owner)=>{
   try{

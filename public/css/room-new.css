@@ -1,0 +1,26 @@
+
+
+#create-room{
+
+    display: flex;
+    flex-direction: column;
+    margin-bottom: auto;
+}
+
+#create-room input{
+
+    margin-bottom: 2rem;
+    width: 40rem;
+    height: 4rem;
+}
+#create-room label{
+
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+#create-room textarea{
+    height: 8rem;
+    margin-bottom: 2rem;
+
+}
