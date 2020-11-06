@@ -16,16 +16,21 @@
                 <h1>Profile</h1>
                 <p class="error"></p>
                 <form id="update-form">
-                    <input type="text" name="firstName" autocomplete="off" value="<%-user.firstName%>" >
-                    <input type="text" name="lastName" autocomplete="off" value="<%- user.lastName%>" >
-                    <input type="text" name="userName" autocomplete="off" value="<%- user.userName%>" >
-                    <input type="password" name="password" autocomplete="off">
-                    <input type="password" name="passwordConfirmation" autocomplete="off">
-                   <div>
-                    <button class="btn btn-center btn-large">Update</button>
-                   </div>         
+                    <input type="hidden" name="id" value="<%- user._id%>" required>
+                    <label for="firstName">First Name: </label> <input type="text" name="firstName" autocomplete="off" required placeholder="First Name"> 
+                    <label for="lastName">Last Name </label> <input type="text" name="lastName" autocomplete="off" required placeholder="Last Name"> 
+                    <label for="userName">User Name: </label> <input type="text" name="userName" autocomplete="off" required placeholder="User Name"> 
+                    <label for="password">Password </label> <input type="password" name="password" autocomplete="off" required placeholder="Password"> 
+                    <label for="passwordConfirmation">password Confirmation </label> <input type="password" name="passwordConfirmation" autocomplete="off" required placeholder="Password Confirmation"> 
+                    
+                    <div>
+                        <button class="btn btn-large">Update</button>
+                        <a id="<%- user._id%>" class="btn-link delete-button"> delete account</a>
+                    </div>
+                   
+                   
                 </form>
-                <a #id="delete-button" class="btn-link"> delete account</a>
+               
             </div>
             </div>
 
@@ -35,6 +40,7 @@
            
             
 
-    
+    <script src="/js/user.js"></script>
+    <script src="/js/script.js"></script>
 
 <%-include('./partials/footer')%>

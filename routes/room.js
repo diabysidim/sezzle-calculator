@@ -8,10 +8,12 @@ const Router = require("express").Router();
 
 
 
-
+// get rooms
 Router.get("/rooms", auth, async (req, res)=>{
 
     try{
+
+
         const rooms = await Room.find({}).populate("owner");
 
         res.render("rooms", {user:req.user, rooms: rooms });
@@ -24,29 +26,35 @@ Router.get("/rooms", auth, async (req, res)=>{
     
 })
 
-
+// add room
 
 Router.post("/rooms", auth, async (req, res)=>{
     try{
-        const room = await Room.createRoom(req.body.name, req.user._id);
+
+        const {name, description} = req.body;
+
+        if(name==="") throw new Error("name empty");
+
+        const room = await Room.createRoom(name, description, req.user._id);
         
-        return res.redirect("/rooms/"+ room._id);
+        return res.status(200).send(room);
     }
     catch(e){
 
         console.log(e);
 
-         return res.render("new-room", {roomInfo: req.body, error:"there was a problem creating the room"});
+         return res.status(400).send("error while adding a room");
     }
     
 })
 
-
-Router.get("/rooms/new", auth, async (req, res)=>{
+// get room creation form
+Router.get("/rooms/new", auth, (req, res)=>{
 
     res.render("new-room", {user:req.user});
 })
 
+// get general chat room
 Router.get("/rooms/general", auth, async (req, res)=>{
 
     try{
@@ -62,7 +70,7 @@ Router.get("/rooms/general", auth, async (req, res)=>{
     
 })
 
-
+// get room by id
 Router.get("/rooms/:id", auth, async (req, res)=>{
 
     try{
@@ -85,7 +93,7 @@ Router.delete("/rooms/:id", auth, async (req, res)=>{
         
         try{
             const room = await Room.deleteOne({_id:req.params.id, owner: req.user._id})
-            return res.status(200).send("room deleted")
+            return res.status(200).send(req.user)
         }
         catch(e){
             return res.status(500).send("thre  was an error while deleting the room");
@@ -94,19 +102,6 @@ Router.delete("/rooms/:id", auth, async (req, res)=>{
 
 })
 
-Router.patch("/rooms/:id", auth, async (req, res)=>{
-        
-    try{
-        const room = await Room.findOneAndUpdate({_id:req.params.id, owner: req.user._id}, {$set:req.body})
-        console.log(room);
-        return res.redirect("/rooms/"+room._id)
-    }
-    catch(e){
-        console.log(e)
-        return res.render("room", {roomInfo: req.body, error:"there was a problem deleting the room"});
-    }
-    
 
-})
 
 module.exports = Router;

@@ -6,12 +6,12 @@
         <h1>Register</h1>
         <p class="error"></p>
         <form id="register-form">
-            <input type="text" name="firstName" autocomplete="off">
-            <input type="text" name="lastName" autocomplete="off">
-            <input type="text" name="userName" autocomplete="off">
-            <input type="password" name="password" autocomplete="off">
-            <input type="password" name="passwordConfirmation" autocomplete="off">
-            <button>Register</button>        
+            <label for="firstName">First Name: </label> <input type="text" name="firstName" autocomplete="off" required placeholder="First Name"> 
+            <label for="lastName">Last Name </label> <input type="text" name="lastName" autocomplete="off" required placeholder="Last Name"> 
+            <label for="userName">User Name: </label> <input type="text" name="userName" autocomplete="off" required placeholder="User Name"> 
+            <label for="password">Password </label> <input type="password" name="password" autocomplete="off" required placeholder="Password"> 
+            <label for="passwordConfirmation">password Confirmation </label> <input type="password" name="passwordConfirmation" autocomplete="off" required placeholder="Password Confirmation"> 
+            <button class="btn-large btn-center btn btn-orange">Register</button>        
         </form>
 </div>
 

@@ -6,13 +6,14 @@ const auth = require("../middlewares/auth");
 
 Router.get("/login", auth, (req, res)=>{
 
-    console.log(req.cookies)
     return res.render("login");
 })
 
+// login
 Router.post("/login", auth, async (req, res)=>{
 
     const {userName,password} = req.body
+    if(userName===""|| password==="") throw new Error("username or password empty");
     try{
 
         const user = await User.login(userName, password);
@@ -40,20 +41,20 @@ Router.get("/register", auth, (req, res)=>{
 
 Router.post("/register",auth, async (req, res) =>{
 
+    if(req.body && (req.body.userName==="" || req.body.password===""|| req.body.firstName==="")) throw new Error("info missing")
     try{
 
         const user= await User.register(req.body);
         const token =  await user.generateToken();
         await user.save();
         res.cookie("token", token );
-        return res.send(user)
-        if(user) return res.render("index", {user:user})
-        else throw new Error("there was a problem creating the user")
+        return res.status(200).send(user)
+       
 
     }
     catch(err){
-        return res.send("username Taken")
-        return res.redirect("/register", {user: req.body})
+        return res.status(400).send("username Taken")
+       
     }
 })
 
@@ -61,16 +62,15 @@ Router.post("/logout", auth, async (req, res)=>{
 
     try {
         
-        console.log("in loggout")
         req.user.tokens = req.user.tokens.filter((token)=>{ token.token !== req.token})
         res.cookie().clearCookie();
         await req.user.save();
         
-        return res.status(200).send("logged out")
+        return res.redirect('/login')
 
     } catch (error) {
         console.log(error);
-        return res.status(500).send("unable to Logout")
+        return res.redirect("/")
 
     }
 
@@ -85,12 +85,12 @@ Router.post("/logoutall", auth, async (req, res)=>{
         req.user.tokens = [];
         await req.user.save();
         res.cookie().clearCookie();
-        return res.status(200).send("logged out to all")
+        return res.redirect('/login')
 
     } catch (error) {
 
         console(error);
-        return res.status(500).send("unable to Logout")
+        return res.redirect("/")
 
     }
 

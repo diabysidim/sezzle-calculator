@@ -6,6 +6,7 @@ const Router = require("express").Router();
 
 
 
+//get user by id
 
 Router.get("/users/:id", auth,  async (req, res)=>{
 
@@ -23,11 +24,15 @@ Router.get("/users/:id", auth,  async (req, res)=>{
    
 })
 
+// delete users
+
 Router.delete("/users/:id", auth, async (req, res)=>{
         
     try{
+
+        await Room.deleteMany({owner:  req.user._id })
         const user = await User.deleteOne({_id: req.user._id})
-        return res.status(200).send("user deleted")
+        return res.status(200).send(user)
     }
     catch(e){
         return res.status(500).send("there was a problem deleting the room");
@@ -36,9 +41,12 @@ Router.delete("/users/:id", auth, async (req, res)=>{
 
 })
 
+// patch user
+
 Router.patch("/users/:id", auth, async (req, res)=>{
     
 try{
+    if(req.body && (req.body.userName==="" || req.body.password===""|| req.body.firstName==="")) throw new Error("info missing");
     const user = await User.findOneAndUpdate({_id: req.user._id}, {$set:req.body})
    
     return res.status(200).send(user);
@@ -51,6 +59,7 @@ catch(e){
 
 })
 
+// get user's room
 
 Router.get("/:id/rooms", auth,  async (req, res)=>{
 
@@ -68,7 +77,7 @@ Router.get("/:id/rooms", auth,  async (req, res)=>{
 })
 
 
-
+//wildcards
 Router.get("*", (req, res)=>{
     return res.redirect("/404")
 })

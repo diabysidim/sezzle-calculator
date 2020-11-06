@@ -40,7 +40,7 @@ userSchema.methods.generateToken = async function () {
     try{
         const token = jwt.sign({
             id: this._id.toString()
-        }, "sezzleCalculatorToken", {
+        }, process.env.TOKEN_KEY, {
             expiresIn: "30 minutes",
         });
         this.tokens.push({
@@ -55,11 +55,11 @@ userSchema.methods.generateToken = async function () {
    
 };
 
-//
+//verify token
 
 userSchema.statics.verifyToken = async function (token) {
     try {
-        const isVerified = jwt.verify(token, "sezzleCalculatorToken");
+        const isVerified = jwt.verify(token, process.env.TOKEN_KEY);
         return isVerified;
     } catch (e) {
         console.log(e);
@@ -67,6 +67,7 @@ userSchema.statics.verifyToken = async function (token) {
     }
 };
 
+// static method to register
 userSchema.statics.register = async (user) => {
     try {
         const newUser = await new User(user);
@@ -78,6 +79,7 @@ userSchema.statics.register = async (user) => {
     }
 };
 
+// static method to handle login
 userSchema.statics.login = async (username, password) => {
     const user = await User.findOne({
         userName:username
@@ -91,19 +93,9 @@ userSchema.statics.login = async (username, password) => {
     else throw new Error("The username or the password is not valid");
 };
 
-// pre save and pre remove middlewares
+// pre save  middlewares
 
-userSchema.pre("remove", async function (next) {
-    try {
-        await Room.deleteMany({
-            owner: this._id
-        });
-        next();
-    } catch (error) {
-        console.log(error);
-        throw new Error("the user cannot be deleted");
-    }
-});
+
 
 userSchema.pre("save", async function (next) {
     if (this.isModified("password")) {

@@ -1,3 +1,6 @@
+
+// linked list to log active chatrooms
+
 class Log{
 
     constructor(data, next){
@@ -41,10 +44,6 @@ class LogList{
             
         }
        
-        console.log("added to log", logInfo)
-        console.log("added to head", this.head)
-        console.log("added to tail", this.tail)
-        console.log("added to size", this.size)
         
     }
 

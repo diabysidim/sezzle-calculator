@@ -28,6 +28,7 @@ const login =  loginForm.addEventListener("submit", async (e)=>{
             changeUrl("http://localhost:3000")
         }
         else{
+            document.querySelector("p.error").textContent="The username or password is not valid"
             console.log("the username or password is not valid")
         }
     }

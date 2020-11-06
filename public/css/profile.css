@@ -1,7 +1,15 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 
 .profile-container{
 
     margin-bottom: auto;
+   
 
 }
 
@@ -14,8 +22,17 @@
 .profile-container #update-form{
 
     
+    display: -webkit-box;
+
+    
+    display: -ms-flexbox;
+
+    
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     margin-bottom: 2rem;;
 }
 
@@ -31,4 +48,34 @@
     cursor: pointer;
     color: red;
     text-transform: capitalize;
+}
+
+#update-form label{
+
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+}
+
+#update-form div{
+
+    display: flex;
+    justify-content: center;;
+    align-items: center;
+}
+#update-form div .btn{
+
+    margin-right:2rem ;
+}
+
+
+@media screen and (max-width: 550px){
+
+    .profile-container #update-form input{
+
+        margin-bottom: 1rem;
+        width: 30rem;
+        height: 2rem;
+    }
+
 }

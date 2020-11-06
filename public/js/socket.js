@@ -3,6 +3,7 @@
 let socket = io();
 
 
+// helper function display message on screen 
 
 const displayMsg= (message)=>{
 
@@ -11,6 +12,9 @@ const displayMsg= (message)=>{
     msg.textContent = message;
     messageScreen.appendChild(msg)
 }
+
+//helper for user in room display
+
 const displaySidebar= (message)=>{
 
     const messageScreen = document.querySelector(".user-in-room");
@@ -19,6 +23,7 @@ const displaySidebar= (message)=>{
     messageScreen.appendChild(msg)
 }
 
+// get room info from input
 const getRoomInfo =()=>{
 
     const username = document.querySelector("#username").value;
@@ -28,6 +33,8 @@ return {username, room}
 
 }
 
+// notify new user in the room
+
 socket.on('usersInRoom', (users)=>{
 
     users.forEach(user => {
@@ -35,6 +42,8 @@ socket.on('usersInRoom', (users)=>{
     });
     console.log(users)
 })
+
+// notfy when join
 
 socket.emit('join', getRoomInfo(), (user)=>{
 
@@ -50,6 +59,8 @@ socket.emit('join', getRoomInfo(), (user)=>{
     }
 })
 
+// received new message
+
 socket.on("messageReceived", (message)=>{
 
     displayMsg(message);
@@ -57,18 +68,16 @@ socket.on("messageReceived", (message)=>{
 
 
 
-
-
-socket.on("joined", (message)=>{
-
-    displayMsg(message);
-})
+//notify when disconnect
 
 socket.on("Left", (message)=>{
 
     displayMsg(message)
    
 })
+
+// send expression to evaluate
+
 const calculatorForm =  document.querySelector("#calculator-form").addEventListener("submit", (e)=>{
         e.preventDefault();
 

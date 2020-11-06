@@ -4,14 +4,15 @@
 
 <div class="login-container"> 
         <h1>Login</h1>
+        <p class="error"></p>
         <form id="login-form">
 
-            <input type="text" name="userName" placeholder="Username" autocomplete="off" >
-            <input type="password" name="password" placeholder="Password" autocomplete="off" >
+            <label for="userName">User Name: </label> <input type="text" name="userName" autocomplete="off" required placeholder="User Name"> 
+            <label for="password">Password </label> <input type="password" name="password" autocomplete="off" required placeholder="Password"> 
             <button class="btn btn-orange btn-large btn-center">Login</button>
         
         </form>
-        <p class="error"></p>
+        
         <a href="/register">Register</a>
 </div>
 

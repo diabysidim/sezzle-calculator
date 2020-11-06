@@ -13,11 +13,15 @@
 
 <form id="create-room">
 
-   <label for="name">Name</label> <input type="text" name="name" id="" placeholder="Name">
-    <label for="description">Description</label><textarea name="description" id="" placeholder="Description"></textarea>
-    <button class="btn btn-large btn-center">Create Room</button>
+   <label for="name">Name</label> <input type="text" name="name" id="" placeholder="Name" required >
+    <label for="description">Description</label><textarea name="description" id="" placeholder="Description" required></textarea>
+    <button  class="btn btn-large btn-center">Create Room</button>
 
 </form>
 
     </div>
 </div>
+
+<script src="/js/create-room.js"></script>
+<script src="/js/script.js"></script>
+<%-include('./partials/footer')%>

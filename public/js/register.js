@@ -1,11 +1,14 @@
 
-
+// register user action
 const registerForm =  document.querySelector("#register-form");
 const register =  registerForm.addEventListener("submit", async (e)=>{
 
     e.preventDefault();
     const registerInfo = {firstName: getFormInput(e,"firstName"),lastName: getFormInput(e,"lastName"),userName: getFormInput(e,"userName"), password: getFormInput(e,"password")}
-
+    if(registerInfo.password !== getFormInput(e,"passwordConfirmation")) {
+        document.querySelector("p.error").textContent="The passwords entered are different"
+        return;
+    }
     try{
 
         const response  = await fetch("http://localhost:3000/register", {
@@ -23,7 +26,8 @@ const register =  registerForm.addEventListener("submit", async (e)=>{
             changeUrl("http://localhost:3000")
         }
         else{
-            console.log("the username or password is not valid")
+            
+            document.querySelector("p.error").textContent="The username is taken"
         }
     }
     catch(err){

@@ -1,71 +1,87 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 
 button{
-   border: none;
-}
-button:active, button:focus{
-
-    outline: none;
     border: none;
-}
-.btn, .btn:link, .btn:visited{
-
-    text-decoration: none;
-    margin-bottom: 1rem;
-    display: table;
-    border: 1px solid black ;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 700;
-    padding: 1rem;
-    border-radius: 50px;
-    cursor: pointer;
-
-}
-
-.btn-orange{
-
-    background-color: #fea500 ;
-}
-.btn-light-blue{
-
-    background-color:#9ff4d9 ;
-}
-.btn:hover{
-
-    transform: translateY(-2px);
-}
-.btn:active{
-
-    transform: translateY(0);
-}
-
-.btn-center{
-    margin: auto;
-}
-
-
-.btn-small{
-
-    width: 5rem;
-    
-}
-.btn-medium{
-
-    width: 10rem;
-    
-}
-
-.btn-large{
-
-    width: 15rem;
-    height: 4rem;
-    
-}
-.btn-link:visited, .btn-link:link{
-
-    text-decoration: none;
-    text-transform: capitalize;
-    cursor: pointer;
-}
-
+ }
+ button:active, button:focus{
+ 
+     outline: none;
+     border: none;
+ }
+ .btn, .btn:link, .btn:visited{
+ 
+     text-decoration: none;
+     margin-bottom: 1rem;
+     display: table;
+     border: 1px solid black ;
+     vertical-align: middle;
+     text-align: center;
+     font-size: 1.8rem;
+     font-weight: 700;
+     padding: 1rem;
+     border-radius: 50px;
+     cursor: pointer;
+     transition: all 0.2s;
+ 
+ }
+ 
+ .btn-orange{
+ 
+     background-color: #fea500 ;
+ }
+ .btn-light-blue{
+ 
+     background-color:#9ff4d9 ;
+ }
+ .btn:hover{
+ 
+     -webkit-transform: translateY(-2px);
+ 
+         -ms-transform: translateY(-2px);
+ 
+             transform: translateY(-2px);
+ }
+ .btn:active{
+ 
+     -webkit-transform: translateY(0);
+ 
+         -ms-transform: translateY(0);
+ 
+             transform: translateY(0);
+ }
+ 
+ .btn-center{
+     margin: auto;
+ }
+ 
+ 
+ .btn-small{
+ 
+     width: 5rem;
+     
+ }
+ .btn-medium{
+ 
+     width: 10rem;
+     
+ }
+ 
+ .btn-large{
+ 
+     width: 15rem;
+     height: 4rem;
+     
+ }
+ .btn-link, .btn-link:visited, .btn-link:link{
+ 
+     text-decoration: none;
+     text-transform: capitalize;
+     cursor: pointer;
+ }
+ 

@@ -34,11 +34,10 @@ const addUser  = async (id, username, room)=>{
                 } 
                 else{
 
-                    console.log("the index is" +  index);
+                    
                     //room is active 
                     // get logs from memory
                     logs = activeRooms[index] && activeRooms[index].log.toArray()
-                    console.log("logs" + logs)
                     
 
                 }
@@ -63,8 +62,10 @@ const addUser  = async (id, username, room)=>{
 
 const removeUser  = (id)=>{
     
-    console.log("active users", activeUsers)
+    // remove user from the active user list
     let userObj;
+
+    // find user by socketid and remove him
     activeUsers = activeUsers.filter(user=>{
         if(user.id === id) userObj = user;
         return user.id!== id})
@@ -76,12 +77,14 @@ const removeUser  = (id)=>{
 
 const usersInRoom = (room)=>{
 
+    // get users in a room
    return  activeUsers.filter(user=>(user.room===room));
 }
 
 const addToLogs = (roomName, log)=>{
     
-    
+    // add log to the logList
+
     const index = activeRooms.findIndex((room)=>{
         return room.name === roomName});
     if(index >= 0){
@@ -99,6 +102,7 @@ const addToLogs = (roomName, log)=>{
 
 const removeRoom = async (roomName) =>{
 
+    // remove user from the list 
     try{
 
         const store = await storeLogs(roomName);
@@ -114,15 +118,22 @@ const removeRoom = async (roomName) =>{
 
 const storeLogs= async (roomName)=>{
 
+    // store logs to the database
+
+    // check if room in activeRooms
     const index = activeRooms.findIndex((room)=>(room.name === roomName))
+
+    
     if(index >= 0){
 
+        // remove room from active rooms
         const logs = activeRooms[index].log.toArray();
 
         activeRooms.slice(index, 1);
         
         try{
 
+            // update database
             const RoomLogs =  await Room.findOneAndUpdate({name:roomName}, {$set:{logs: logs}})
             return 1; 
 

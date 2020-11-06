@@ -9,7 +9,9 @@ const roomSchema = new mongoose.Schema({
     unique: true,
   },
 
-  description: String,
+  description: {
+    type: String,
+  },
 
   logs: [{
       userMessages:{
@@ -22,10 +24,10 @@ const roomSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
-
-roomSchema.statics.createRoom = async (name, owner)=>{
+// create room static method
+roomSchema.statics.createRoom = async (name, description, owner)=>{
   try{
-    const room  = await new Room({name, owner});
+    const room  = await new Room({name, description, owner});
     await room.save();
     return room;
   }

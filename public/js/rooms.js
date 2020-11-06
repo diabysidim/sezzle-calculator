@@ -1,6 +1,6 @@
 
 
-
+// delete room action
 const deleteButton =  document.querySelectorAll("a.delete-btn");
 
 deleteButton.forEach(btn=> btn.addEventListener("click", async (e)=>{
@@ -17,11 +17,13 @@ deleteButton.forEach(btn=> btn.addEventListener("click", async (e)=>{
                 method: "Delete"})       
     
             if(response.status === 200){            
-    
+                
+
+                const data = await response.json();
                 
               alert("the room was deleted");
                 
-                changeUrl("http://localhost:3000/rooms")
+                reload();
             }
             else{
                 alert("there was a problem deleting the room");

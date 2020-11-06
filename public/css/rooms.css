@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 .rooms-container{
 
     height: 100%;
@@ -28,4 +35,23 @@
 
     cursor: pointer;
     color: red;
+}
+
+
+@media screen and (max-width: 520px){
+
+    .rooms-container table{
+
+        width: 30rem;
+    }   
+
+    .rooms-container tr{
+
+        border: 1px solid black;
+        height: 3rem;
+        font-size: 1.2rem;
+    }
+    
+
+
 }
