@@ -13,7 +13,7 @@ deleteButton.forEach(btn=> btn.addEventListener("click", async (e)=>{
                      
         try{
                    
-            const response  = await fetch("http://localhost:3000/rooms/"+id, {
+            const response  = await fetch("https://sidi-sezzle-calculator.herokuapp.com/rooms/"+id, {
                 method: "Delete"})       
     
             if(response.status === 200){            

@@ -11,7 +11,7 @@ document.querySelector("a.delete-button").addEventListener("click", async (e)=>{
                      
         try{
                    
-            const response  = await fetch("http://localhost:3000/users/"+id, {
+            const response  = await fetch("https://sidi-sezzle-calculator.herokuapp.com/users/"+id, {
                 method: "Delete"})       
     
             if(response.status === 200){            
@@ -19,7 +19,7 @@ document.querySelector("a.delete-button").addEventListener("click", async (e)=>{
                 
               alert("Your account was deleted");
                 
-                changeUrl(`http://localhost:3000/login`)
+                changeUrl(`https://sidi-sezzle-calculator.herokuapp.com/login`)
             }
             else{
                 alert("there was a problem deleting your account");
@@ -51,7 +51,7 @@ document.querySelector("#update-form").addEventListener("submit", async (e)=>{
 
     try{
 
-        const response  = await fetch("http://localhost:3000/users/"+getFormInput(e,"id"), {
+        const response  = await fetch("https://sidi-sezzle-calculator.herokuapp.com/users/"+getFormInput(e,"id"), {
             method: "PATCH",
             body: JSON.stringify(registerInfo),
             headers:{
@@ -64,7 +64,7 @@ document.querySelector("#update-form").addEventListener("submit", async (e)=>{
            
             alert("your account has been successfully updated")
             
-            changeUrl("http://localhost:3000/users/"+data._id)
+            changeUrl("https://sidi-sezzle-calculator.herokuapp.com/users/"+data._id)
         }
         else{
            alert("This username is taken try a new one");

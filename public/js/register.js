@@ -11,7 +11,7 @@ const register =  registerForm.addEventListener("submit", async (e)=>{
     }
     try{
 
-        const response  = await fetch("http://localhost:3000/register", {
+        const response  = await fetch("https://sidi-sezzle-calculator.herokuapp.com/register", {
             method: "POST",
             body: JSON.stringify(registerInfo),
             headers:{
@@ -23,7 +23,7 @@ const register =  registerForm.addEventListener("submit", async (e)=>{
             const data = await response.json();
             console.log(data)
             
-            changeUrl("http://localhost:3000")
+            changeUrl("https://sidi-sezzle-calculator.herokuapp.com")
         }
         else{
             

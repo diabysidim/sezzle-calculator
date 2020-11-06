@@ -10,7 +10,7 @@ const CreateButton = document.querySelector("#create-room").addEventListener("su
 
     try{
 
-        const response  = await fetch("http://localhost:3000/rooms", {
+        const response  = await fetch("https://sidi-sezzle-calculator.herokuapp.com/rooms", {
             method: "POST",
             body: JSON.stringify({name, description}),
             headers:{
@@ -22,7 +22,7 @@ const CreateButton = document.querySelector("#create-room").addEventListener("su
             const data = await response.json();
             alert(`the room ${data.name} was created`)
             
-            changeUrl("http://localhost:3000/rooms/"+data._id)
+            changeUrl("https://sidi-sezzle-calculator.herokuapp.com/rooms/"+data._id)
         }
         else{
             alert(`there was a probleme creating the room. Choose another name please`)

@@ -13,7 +13,7 @@ const login =  loginForm.addEventListener("submit", async (e)=>{
 
     try{
 
-        const response  = await fetch("http://localhost:3000/login", {
+        const response  = await fetch("https://sidi-sezzle-calculator.herokuapp.com/login", {
             method: "POST",
             body: JSON.stringify(loginInfo),
             headers:{
@@ -25,7 +25,7 @@ const login =  loginForm.addEventListener("submit", async (e)=>{
             const data = await response.json();
             console.log(data)
             
-            changeUrl("http://localhost:3000")
+            changeUrl("https://sidi-sezzle-calculator.herokuapp.com")
         }
         else{
             document.querySelector("p.error").textContent="The username or password is not valid"
